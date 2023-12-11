@@ -1,4 +1,5 @@
-﻿using Backend.Services;
+﻿using Backend.Interfaces;
+using Backend.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,7 +9,7 @@ namespace Backend
     {
         public static void ProvideServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton<JwtService, JwtService>();
+            services.AddSingleton<IJwtService, JwtService>();
         }
     }
 }

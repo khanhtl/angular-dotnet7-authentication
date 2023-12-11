@@ -1,8 +1,9 @@
 ﻿using Backend.Dtos;
+using Backend.Interfaces;
 using Backend.Models;
-using Backend.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Backend.Controllers
@@ -11,11 +12,11 @@ namespace Backend.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly JwtService _jwtService;
+        private readonly IJwtService _jwtService;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
 
-        public AuthController(JwtService jwtService, SignInManager<User> signInManager, UserManager<User> userManager)
+        public AuthController(IJwtService jwtService, SignInManager<User> signInManager, UserManager<User> userManager)
         {
             _jwtService = jwtService;
             _signInManager = signInManager;
@@ -40,6 +41,34 @@ namespace Backend.Controllers
             }
             return CreateApplicationUserDto(user);
         }
+
+        [HttpPost("register")]
+        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        {
+            var existEmail = await CheckEmailExist(registerDto.Email);
+            if (existEmail)
+            {
+                return BadRequest("Email already exist. Please try with another email address.");
+            }
+            var userToAdd = new User
+            {
+                Email = registerDto.Email.ToLower(),
+                LastName = registerDto.LastName,
+                FirstName = registerDto.FirstName,
+                UserName = registerDto.Email.ToLower(),
+                EmailConfirmed = true
+            };
+
+            var resul = await _userManager.CreateAsync(userToAdd, registerDto.PassWord);
+            if (!resul.Succeeded) return BadRequest(resul.Errors);
+            return Ok();
+        }
+
+        private async Task<bool> CheckEmailExist(string email)
+        {
+            return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
+        }
+
         #region Private Helper Methods
         private UserDto CreateApplicationUserDto(User user)
         {
@@ -47,7 +76,7 @@ namespace Backend.Controllers
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Jwt = _jwtService.CreateJwt(user),
+                Token = _jwtService.CreateJwt(user),
             };
         }
         #endregion
