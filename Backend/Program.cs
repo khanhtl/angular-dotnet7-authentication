@@ -1,3 +1,4 @@
+using Backend;
 using Backend.Data;
 using Backend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -50,7 +51,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false,
         };
     });
-
+builder.Services.ProvideServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
