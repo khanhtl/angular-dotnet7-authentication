@@ -1,0 +1,11 @@
+{
+    "ERROR_MESSAGES": {
+        "REQUIRED": "This field cannot be blank",
+        "MIN_LENGTH": "Value must be at least {{requiredLength}} characters",
+        "MAX_LENGTH": "Value must be at maximum {{requiredLength}} characters",
+        "EMAIL": "Please enter a valid email address",
+        "NOT_MATCH": "Value not match",
+        "PASSWORD_NOT_MATCH": "Password not match",
+        "PASSWORD": "Password must be at least 8 characters"
+    }
+}

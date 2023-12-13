@@ -1,30 +1,45 @@
 <div class="d-flex justify-content-center">
     <div class="col-12 col-lg-5">
         <main class="login-form">
-            <form>
+            <form [formGroup]="registerForm" autocomplete="off" (ngSubmit)="submitForm()">
                 <div class="text-center mb-4">
                     <h3 class="mb-3 font-weight-nomal">Create a new account</h3>
                 </div>
                 <div class="form-floating mb-3">
-                    <input placeholder="First Name" name="firstName" type="text" class="form-control" p>
-                    <label for="firstName">First Name</label>
+                    <input [class.is-invalid]="(registerForm | err:'firstName') && (registerForm | touched:'firstName')" formControlName="firstName" placeholder="First Name" name="firstName" type="text"
+                        class="form-control" />
+                    <label for="firstName">First Name <span style="color: red">*</span></label>
+                    <!-- <div *ngIf="(registerForm | err:'firstName') && (registerForm | touched:'firstName')" class="invalid-feedback">
+                        {{ registerForm | errMerssage:'firstName' }}
+                    </div> -->
+                    <pre>{{ registerForm | err:'firstName' | json }}</pre>
                 </div>
                 <div class="form-floating mb-3">
-                    <input placeholder="Last Name" name="lastName" type="text" class="form-control" p>
-                    <label for="lastName">Last Name</label>
+                    <input formControlName="lastName" placeholder="Last Name" name="lastName" type="text"
+                        class="form-control" />
+                    <label for="lastName">Last Name <span style="color: red">*</span></label>
+                    <pre>{{ registerForm | err:'lastName' | json }}</pre>
                 </div>
                 <div class="form-floating mb-3">
-                    <input placeholder="Email" name="email" type="text" class="form-control" p>
-                    <label for="email">Email</label>
+                    <input formControlName="email" placeholder="Email" name="email" type="text" class="form-control" />
+                    <label for="email">Email <span style="color: red">*</span></label>
+                    <pre>{{ registerForm | err:'email' | json }}</pre>
                 </div>
-                <div class="form-floating mb-3">
-                    <input placeholder="Password" name="password" type="password" class="form-control">
-                    <label for="password">Password</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input placeholder="Confirm Password" name="password" type="confirmPassword" class="form-control">
-                    <label for="confirmPassword">Confirm Password</label>
-                </div>
+                <ng-container formGroupName="passwords">
+                    <div class="form-floating mb-3">
+                        <input formControlName="password" placeholder="Password" name="password" type="password"
+                            class="form-control" />
+                        <label for="password">Password <span style="color: red">*</span></label>
+                        <pre>{{ registerForm | err:'password':'passwords' | json }}</pre>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input formControlName="confirmPassword" placeholder="Confirm Password" name="confirmPassword"
+                            type="password" class="form-control" />
+                        <label for="confirmPassword">Confirm Password <span style="color: red">*</span></label>
+                        <pre>{{ registerForm | err:'passwords' | json }}</pre>
+                    </div>
+                </ng-container>
+
                 <div class="d-grid mt-4 px-1">
                     <button class="btn btn-lg btn-info" type="submit">Register</button>
                 </div>
