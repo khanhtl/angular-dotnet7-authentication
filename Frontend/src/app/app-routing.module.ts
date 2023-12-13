@@ -1,3 +1,4 @@
+import { PlayComponent } from './play/play.component';
 import { NotFoundComponent } from './shared/components/errors/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
@@ -7,6 +8,10 @@ const routes: Routes=[
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'play',
+    component: PlayComponent
   },
   {
     path: 'not-found',
