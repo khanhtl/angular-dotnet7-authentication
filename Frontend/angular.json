@@ -31,7 +31,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "./node_modules/bootswatch/dist/flatly/bootstrap.css"
+              "./node_modules/bootswatch/dist/flatly/bootstrap.css",
+              "./node_modules/bootstrap-icons/font/bootstrap-icons.css"
             ],
             "scripts": []
           },

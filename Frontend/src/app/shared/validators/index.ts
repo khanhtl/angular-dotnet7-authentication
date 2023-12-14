@@ -84,10 +84,7 @@ export class CustomValidators {
           };
     };
   }
-  static matchPassword(
-    firstControlName: string,
-    secondControlName: string,
-  ) {
+  static matchPassword(firstControlName: string, secondControlName: string) {
     return this.match(
       firstControlName,
       secondControlName,
@@ -103,6 +100,13 @@ export class CustomValidators {
       const firstValue = fg.get(firstControlName)?.value;
       const secondValue = fg.get(secondControlName)?.value;
       if (firstValue === secondValue) return null;
+      fg.get(secondControlName)?.setErrors({
+        valueNotMatch: {
+          firstValue,
+          secondValue,
+          errorMessage: errorMessage || 'ERROR_MESSAGES.NOT_MATCH',
+        },
+      });
       return {
         valueNotMatch: {
           firstValue,

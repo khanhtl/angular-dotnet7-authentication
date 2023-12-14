@@ -1,0 +1,14 @@
+:host {
+    .icon-eye {
+        right: 0;
+        top: 17px;
+        margin-right: 11px;
+        cursor: pointer;
+    }
+    input {
+        padding-right: calc(1.5em + 0.75rem);
+    }
+    .was-validated .form-control:invalid, .form-control.is-invalid {
+        background-image: none !important;
+    }
+}

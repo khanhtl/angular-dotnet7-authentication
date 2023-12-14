@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { GetFormControlErrorPipe } from './pipes/get-form-control-error.pipe';
 import { GetErrorMessagePipe } from './pipes/get-error-message.pipe';
 import { GetFormControlTouchPipe } from './pipes/get-form-control-touch.pipe';
+import { ErrorMessageComponent } from './components/error-message/error-message.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { GetFormControlTouchPipe } from './pipes/get-form-control-touch.pipe';
     GetFormControlErrorPipe,
     GetErrorMessagePipe,
     GetFormControlTouchPipe,
+    ErrorMessageComponent,
   ],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule, TranslateModule],
@@ -26,6 +28,7 @@ import { GetFormControlTouchPipe } from './pipes/get-form-control-touch.pipe';
     GetErrorMessagePipe,
     TranslateModule,
     GetFormControlTouchPipe,
+    ErrorMessageComponent
   ],
 })
 export class SharedModule {}
