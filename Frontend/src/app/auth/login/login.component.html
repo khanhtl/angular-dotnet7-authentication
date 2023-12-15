@@ -1,17 +1,17 @@
 <div class="d-flex justify-content-center">
     <div class="col-12 col-lg-5">
         <main class="login-form">
-            <form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="submitForm()">
+            <form [formGroup]="formGroup" autocomplete="off" (ngSubmit)="submitForm()">
                 <div class="text-center mb-4">
-                  <h3 class="mb-3 font-weight-nomal">Create a new account</h3>
+                  <h3 class="mb-3 font-weight-nomal">Welcome Back!</h3>
                 </div>
-                <div *ngIf="loginForm.controls['email'] as control" class="form-floating mb-3">
+                <div *ngIf="formGroup.controls['email'] as control" class="form-floating mb-3">
                   <input [class.is-invalid]="control.touched && control.invalid" formControlName="email" placeholder="Email"
                     name="email" type="text" class="form-control" />
                   <label for="email">Email <span style="color: red">*</span></label>
                   <error-message [control]="control"></error-message>
                 </div>
-                <div *ngIf="loginForm.controls['password'] as control" class="form-floating mb-3 position-relative">
+                <div *ngIf="formGroup.controls['password'] as control" class="form-floating mb-3 position-relative">
                     <input [class.is-invalid]="control.touched && control.invalid" formControlName="password"
                       placeholder="Password" name="password" [type]="isShowPassword ? 'text' : 'password'"
                       class="form-control" />
@@ -23,7 +23,7 @@
                     <error-message [control]="control"></error-message>
                   </div>
                 <div class="d-grid mt-4 px-1">
-                  <button [disabled]="!loginForm.valid" class="btn btn-lg btn-info" type="submit">
+                  <button [disabled]="!formGroup.valid" class="btn btn-lg btn-primary" type="submit">
                     Register
                   </button>
                 </div>

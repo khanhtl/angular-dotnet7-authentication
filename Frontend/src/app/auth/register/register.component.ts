@@ -1,27 +1,22 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { CustomValidators } from '../../shared/validators';
-import { BaseFormComponent } from './../../shared/components/base/base-form.component';
+import { CustomValidators } from 'src/app/shared/validators';
+import { BaseAuthFormComponent } from 'src/app/shared/components/base/base-auth-form.component';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RegisterComponent extends BaseFormComponent implements OnInit {
-  
-  registerForm: FormGroup=new FormGroup({});
-  controls=this.registerForm.controls;
-  isShowPassword = false;
-  isShowConfirmPassword = false;
-  
-  ngOnInit(): void {
+export class RegisterComponent extends BaseAuthFormComponent implements OnInit {
+  override ngOnInit(): void {
+    super.ngOnInit();
     this.initializeForm();
   }
 
   initializeForm() {
-    this.registerForm = this._formBuilder.group({
+    this.formGroup = this._formBuilder.group({
       firstName: [
         '',
         Validators.compose([
@@ -54,16 +49,19 @@ export class RegisterComponent extends BaseFormComponent implements OnInit {
               CustomValidators.password(),
             ]),
           ],
-          confirmPassword: [
-            '',
-          ],
+          confirmPassword: [''],
         },
-        { validator: CustomValidators.matchPassword('password', 'confirmPassword') }
+        {
+          validator: CustomValidators.matchPassword(
+            'password',
+            'confirmPassword'
+          ),
+        }
       ),
     });
   }
 
-  submitForm() {
-    console.log(this.registerForm);
+  override onSubmit(): void {
+    console.log(this.formGroup);
   }
 }

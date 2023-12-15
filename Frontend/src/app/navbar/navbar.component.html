@@ -1,29 +1,33 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="nav-brand" routerLink="/">
                 <img src="./assets/images/logo.png" alt="LOGO" class="me-3 cursor-pointer">
             </a>
             <button class="navbar-toggler" type="button">
                 <span class="navbar-toggler-icon"></span>
-              </button>
+            </button>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+                        <a class="nav-link" routerLink="/" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/play" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Play</a>
+                        <a class="nav-link" routerLink="/play" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}">Authenticated</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="btn btn-light mx-2" routerLink="/auth/register">
+                        <a class="btn btn-primary mx-2" routerLink="/auth/register" routerLinkActive="btn-success"
+                            [routerLinkActiveOptions]="{exact: true}">
                             Register
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-light" routerLink="/auth/login">
+                        <a class="btn btn-primary" routerLink="/auth/login" routerLinkActive="btn-success"
+                            [routerLinkActiveOptions]="{exact: true}">
                             Login
                         </a>
                     </li>

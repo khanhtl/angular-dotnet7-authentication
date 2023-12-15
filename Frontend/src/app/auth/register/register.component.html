@@ -1,29 +1,29 @@
 <div class="d-flex justify-content-center">
   <div class="col-12 col-lg-5">
     <main class="login-form">
-      <form [formGroup]="registerForm" autocomplete="off" (ngSubmit)="submitForm()">
+      <form [formGroup]="formGroup" autocomplete="off" (ngSubmit)="submitForm()">
         <div class="text-center mb-4">
           <h3 class="mb-3 font-weight-nomal">Create a new account</h3>
         </div>
-        <div *ngIf="registerForm.controls['firstName'] as control" class="form-floating mb-3">
+        <div *ngIf="formGroup.controls['firstName'] as control" class="form-floating mb-3">
           <input [class.is-invalid]="control.touched && control.invalid" formControlName="firstName"
             placeholder="First Name" name="firstName" type="text" class="form-control" />
           <label for="firstName">First Name <span style="color: red">*</span></label>
           <error-message [control]="control"></error-message>
         </div>
-        <div *ngIf="registerForm.controls['lastName'] as control" class="form-floating mb-3">
+        <div *ngIf="formGroup.controls['lastName'] as control" class="form-floating mb-3">
           <input [class.is-invalid]="control.touched && control.invalid" formControlName="lastName"
             placeholder="Last Name" name="lastName" type="text" class="form-control" />
           <label for="lastName">Last Name <span style="color: red">*</span></label>
           <error-message [control]="control"></error-message>
         </div>
-        <div *ngIf="registerForm.controls['email'] as control" class="form-floating mb-3">
+        <div *ngIf="formGroup.controls['email'] as control" class="form-floating mb-3">
           <input [class.is-invalid]="control.touched && control.invalid" formControlName="email" placeholder="Email"
             name="email" type="text" class="form-control" />
           <label for="email">Email <span style="color: red">*</span></label>
           <error-message [control]="control"></error-message>
         </div>
-        <ng-container formGroupName="passwords" *ngIf="registerForm?.get('passwords') as passwords">
+        <ng-container formGroupName="passwords" *ngIf="formGroup?.get('passwords') as passwords">
           <div *ngIf="passwords.get('password') as control" class="form-floating mb-3 position-relative">
             <input [class.is-invalid]="control.touched && control.invalid" formControlName="password"
               placeholder="Password" name="password" [type]="isShowPassword ? 'text' : 'password'"
@@ -48,7 +48,7 @@
           </div>
         </ng-container>
         <div class="d-grid mt-4 px-1">
-          <button [disabled]="!registerForm.valid" class="btn btn-lg btn-info" type="submit">
+          <button [disabled]="!formGroup.valid" class="btn btn-lg btn-primary" type="submit">
             Register
           </button>
         </div>

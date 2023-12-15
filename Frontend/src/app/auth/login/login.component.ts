@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { BaseFormComponent } from 'src/app/shared/components/base/base-form.component';
+import { BaseAuthFormComponent } from 'src/app/shared/components/base/base-auth-form.component';
 import { CustomValidators } from 'src/app/shared/validators';
 
 @Component({
@@ -8,14 +8,13 @@ import { CustomValidators } from 'src/app/shared/validators';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends BaseFormComponent implements OnInit {
-  loginForm: FormGroup=new FormGroup({});
-  isShowPassword=false;
-  ngOnInit(): void {
+export class LoginComponent extends BaseAuthFormComponent implements OnInit {
+  override ngOnInit(): void {
+    super.ngOnInit();
     this.initializeForm();
   }
   initializeForm() {
-    this.loginForm = this._formBuilder.group({
+    this.formGroup = this._formBuilder.group({
       email: [
         '',
         Validators.compose([
@@ -32,7 +31,7 @@ export class LoginComponent extends BaseFormComponent implements OnInit {
       ],
     });
   }
-  submitForm() {
-    console.log(this.loginForm);
+  override onSubmit(): void {
+      console.log(this.formGroup);
   }
 }
