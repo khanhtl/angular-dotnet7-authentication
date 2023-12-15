@@ -13,10 +13,8 @@ export class RegisterComponent extends BaseFormComponent implements OnInit {
   
   registerForm: FormGroup=new FormGroup({});
   controls=this.registerForm.controls;
-  submitted = false;
   isShowPassword = false;
   isShowConfirmPassword = false;
-  errorMessages: string[]=[];
   
   ngOnInit(): void {
     this.initializeForm();
@@ -63,16 +61,9 @@ export class RegisterComponent extends BaseFormComponent implements OnInit {
         { validator: CustomValidators.matchPassword('password', 'confirmPassword') }
       ),
     });
-    this.controls=this.registerForm.controls;
   }
 
   submitForm() {
     console.log(this.registerForm);
-  }
-
-  controlErrors(formControlName: string, formGroupName?: string) {
-    console.log('controlErrors');
-    
-    return this.getErrors(this.registerForm, formControlName, formGroupName);
   }
 }
