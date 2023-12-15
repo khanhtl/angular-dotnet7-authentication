@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -30,16 +31,29 @@ namespace Backend.Controllers
             var user = await _userManager.FindByNameAsync(loginDto.UserName);
             if (user == null)
             {
-                return Unauthorized("Invalid username or password.");
+
+                return Unauthorized(new Dictionary<string, object>
+                {
+                    { "errorMessage", "ERROR_MESSAGES.INVALID_USERNAME_PASSWORD" },
+                    { "message", "Invalid username or password." }
+                });
             }
             if (!user.EmailConfirmed)
             {
-                return Unauthorized("Please confirm your email.");
+                return Unauthorized(new Dictionary<string, object>
+                {
+                    { "errorMessage", "ERROR_MESSAGES.EMAIL_NOT_CONFIRM" },
+                    { "message", "Please confirm your email." }
+                });
             }
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.PassWord, false);
             if (!result.Succeeded)
             {
-                return Unauthorized("Invalid username or password.");
+                return Unauthorized(new Dictionary<string, object>
+                {
+                    { "errorMessage", "ERROR_MESSAGES.INVALID_USERNAME_PASSWORD" },
+                    { "message", "Invalid username or password." }
+                });
             }
             return CreateApplicationUserDto(user);
         }
@@ -59,7 +73,11 @@ namespace Backend.Controllers
             var existEmail = await CheckEmailExist(registerDto.Email);
             if (existEmail)
             {
-                return BadRequest("Email already exist. Please try with another email address.");
+                return BadRequest(new Dictionary<string, object>
+                {
+                    { "errorMessage", "ERROR_MESSAGES.EMAIL_ALREADY_EXIST" },
+                    { "message", "Email already exist. Please try with another email address." }
+                });
             }
             var userToAdd = new User
             {
