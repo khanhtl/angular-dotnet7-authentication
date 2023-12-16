@@ -62,6 +62,13 @@ export class RegisterComponent extends BaseAuthFormComponent implements OnInit {
   }
 
   override onSubmit(): void {
-    console.log(this.formGroup);
+    const registerDto=structuredClone(this.formGroup.value);
+    const { password }=registerDto.passwords;
+    registerDto.password=password;
+    delete registerDto.passwords;
+    this._authService.register(registerDto).subscribe({
+      next: (response) => console.log(response),
+      error: (error) => console.error(error)
+    })
   }
 }
