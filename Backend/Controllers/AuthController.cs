@@ -35,6 +35,7 @@ namespace Backend.Controllers
                 return Unauthorized(new Dictionary<string, object>
                 {
                     { "errorMessage", "ERROR_MESSAGES.INVALID_USERNAME_PASSWORD" },
+                    { "errorCode", 999 },
                     { "message", "Invalid username or password." }
                 });
             }
@@ -43,6 +44,7 @@ namespace Backend.Controllers
                 return Unauthorized(new Dictionary<string, object>
                 {
                     { "errorMessage", "ERROR_MESSAGES.EMAIL_NOT_CONFIRM" },
+                    { "errorCode", 998 },
                     { "message", "Please confirm your email." }
                 });
             }
@@ -52,6 +54,7 @@ namespace Backend.Controllers
                 return Unauthorized(new Dictionary<string, object>
                 {
                     { "errorMessage", "ERROR_MESSAGES.INVALID_USERNAME_PASSWORD" },
+                    { "errorCode", 999 },
                     { "message", "Invalid username or password." }
                 });
             }
@@ -76,6 +79,7 @@ namespace Backend.Controllers
                 return BadRequest(new Dictionary<string, object>
                 {
                     { "errorMessage", "ERROR_MESSAGES.EMAIL_ALREADY_EXIST" },
+                    { "errorCode", 997 },
                     { "message", "Email already exist. Please try with another email address." }
                 });
             }
