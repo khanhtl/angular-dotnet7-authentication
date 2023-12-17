@@ -3,9 +3,9 @@ using Backend.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Backend
+namespace Backend.Extensions
 {
-    public static class ServicesExtension
+    public static class ServiceExtension
     {
         public static void ProvideServices(this IServiceCollection services, IConfiguration configuration)
         {
