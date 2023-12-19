@@ -1,1 +1,1 @@
-export * from './pattern-const';
+export * from './PatternConst';

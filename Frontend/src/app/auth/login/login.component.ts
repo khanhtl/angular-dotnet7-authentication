@@ -15,14 +15,14 @@ export class LoginComponent extends BaseAuthFormComponent implements OnInit {
   }
   initializeForm() {
     this.formGroup = this._formBuilder.group({
-      email: [
+      Email: [
         '',
         Validators.compose([
           CustomValidators.required(),
           CustomValidators.email(),
         ]),
       ],
-      password: [
+      Password: [
         '',
         Validators.compose([
           CustomValidators.required(),
@@ -32,6 +32,25 @@ export class LoginComponent extends BaseAuthFormComponent implements OnInit {
     });
   }
   override onSubmit(): void {
-      console.log(this.formGroup);
+    this._authService.login(this.formGroup.value).subscribe(res => {
+      if (res.Success) {
+        this._router.navigateByUrl("/");
+        return;
+      }
+      if (res.Errors.length) {
+        res.Errors.forEach(error => {
+          const formControl=this.formGroup.get(error.Field);
+          if (formControl) {
+            formControl.setErrors({
+              serverValidateError: {
+                errorMessage: error.ErrorMessage,
+              },
+            }) 
+          }
+        });
+        this._cdr.detectChanges();
+        return;
+      }
+    })
   }
 }

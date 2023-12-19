@@ -2,8 +2,12 @@
 {
     public enum EnumErrorCode
     {
-        ModelInvalid = 900,
+        ModelInvalid = 800,
         EmailExist,
-        ExmailNotConfirm,
+        EmailNotConfirm,
+        InvalidEmailOrPassword,
+
+        Undefined = 999
+
     }
 }

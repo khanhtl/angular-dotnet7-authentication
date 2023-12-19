@@ -17,7 +17,7 @@ export class RegisterComponent extends BaseAuthFormComponent implements OnInit {
 
   initializeForm() {
     this.formGroup = this._formBuilder.group({
-      firstName: [
+      FirstName: [
         '',
         Validators.compose([
           CustomValidators.required(),
@@ -25,7 +25,7 @@ export class RegisterComponent extends BaseAuthFormComponent implements OnInit {
           CustomValidators.maxLength(20),
         ]),
       ],
-      lastName: [
+      LastName: [
         '',
         Validators.compose([
           CustomValidators.required(),
@@ -33,28 +33,28 @@ export class RegisterComponent extends BaseAuthFormComponent implements OnInit {
           CustomValidators.maxLength(20),
         ]),
       ],
-      email: [
+      Email: [
         '',
         Validators.compose([
           CustomValidators.required(),
           CustomValidators.email(),
         ]),
       ],
-      passwords: this._formBuilder.group(
+      Passwords: this._formBuilder.group(
         {
-          password: [
+          Password: [
             '',
             Validators.compose([
               CustomValidators.required(),
               CustomValidators.password(),
             ]),
           ],
-          confirmPassword: [''],
+          ConfirmPassword: [''],
         },
         {
           validator: CustomValidators.matchPassword(
-            'password',
-            'confirmPassword'
+            'Password',
+            'ConfirmPassword'
           ),
         }
       ),
@@ -63,12 +63,30 @@ export class RegisterComponent extends BaseAuthFormComponent implements OnInit {
 
   override onSubmit(): void {
     const registerDto=structuredClone(this.formGroup.value);
-    const { password }=registerDto.passwords;
-    registerDto.password=password;
-    delete registerDto.passwords;
-    this._authService.register(registerDto).subscribe({
-      next: (response) => console.log(response),
-      error: (error) => console.error(error)
+    const { Password }=registerDto.Passwords;
+    registerDto.Password=Password;
+    delete registerDto.Passwords;
+    this._authService.register(registerDto).subscribe(res => {
+      console.log(res.Errors);
+
+      if (res.Success) {
+        this._router.navigateByUrl("/auth/login");
+        return;
+      }
+      if (res.Errors.length) {
+        res.Errors.forEach(error => {
+          const formControl=this.formGroup.get(error.Field);
+          if (formControl) {
+            formControl.setErrors({
+              serverValidateError: {
+                errorMessage: error.ErrorMessage,
+              },
+            }) 
+          }
+        });
+        this._cdr.detectChanges();
+        return;
+      }
     })
   }
 }

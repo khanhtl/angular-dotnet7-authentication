@@ -5,14 +5,14 @@
                 <div class="text-center mb-4">
                   <h3 class="mb-3 font-weight-nomal">Welcome Back!</h3>
                 </div>
-                <div *ngIf="formGroup.controls['email'] as control" class="form-floating mb-3">
-                  <input [class.is-invalid]="control.touched && control.invalid" formControlName="email" placeholder="Email"
+                <div *ngIf="formGroup.controls['Email'] as control" class="form-floating mb-3">
+                  <input [class.is-invalid]="control.touched && control.invalid" formControlName="Email" placeholder="Email"
                     name="email" type="text" class="form-control" />
                   <label for="email">Email <span style="color: red">*</span></label>
                   <error-message [control]="control"></error-message>
                 </div>
-                <div *ngIf="formGroup.controls['password'] as control" class="form-floating mb-3 position-relative">
-                    <input [class.is-invalid]="control.touched && control.invalid" formControlName="password"
+                <div *ngIf="formGroup.controls['Password'] as control" class="form-floating mb-3 position-relative">
+                    <input [class.is-invalid]="control.touched && control.invalid" formControlName="Password"
                       placeholder="Password" name="password" [type]="isShowPassword ? 'text' : 'password'"
                       class="form-control" />
                     <label for="password">Password <span style="color: red">*</span></label>
@@ -23,8 +23,8 @@
                     <error-message [control]="control"></error-message>
                   </div>
                 <div class="d-grid mt-4 px-1">
-                  <button [disabled]="!formGroup.valid" class="btn btn-lg btn-primary" type="submit">
-                    Register
+                  <button class="btn btn-lg btn-primary" type="submit">
+                    Login
                   </button>
                 </div>
               </form>

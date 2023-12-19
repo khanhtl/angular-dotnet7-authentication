@@ -1,10 +1,17 @@
-﻿using System.Collections.Generic;
-
-namespace Backend.Models
+﻿namespace Backend.Models
 {
     public class Error
     {
         public string Field { get; set; }
-        public List<string> Errors { get; set; }
+        public string ErrorMessage { get; set; }
+        public Error(string field, string errorMessage)
+        {
+            this.Field = field;
+            this.ErrorMessage = errorMessage;
+        }
+        public Error()
+        {
+
+        }
     }
 }

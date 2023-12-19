@@ -1,4 +1,4 @@
-import { EMAIL_PATTERN, PASSWORD_PATTERN } from './../constants/pattern-const';
+import { EMAIL_PATTERN, PASSWORD_PATTERN } from './../constants/';
 import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
 export class CustomValidators {
   static required(): ValidatorFn {

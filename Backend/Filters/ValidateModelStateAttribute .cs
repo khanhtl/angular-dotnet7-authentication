@@ -21,7 +21,7 @@ namespace Backend.Filters
                .Select(key => new Error
                {
                    Field = key,
-                   Errors = context.ModelState[key].Errors.Select(error => error.ErrorMessage).ToList()
+                   ErrorMessage = context.ModelState[key].Errors.Select(error => error.ErrorMessage).FirstOrDefault()
                })
                .ToList();
 

@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { BaseComponent } from './base.component';
 import { Subject, filter, startWith, switchMap, take, tap } from 'rxjs';
+import { Router } from '@angular/router';
 @Directive({})
 export class BaseAuthFormComponent
   extends BaseComponent
   implements OnInit, OnDestroy
 {
+  protected readonly _router = inject(Router);
   protected readonly _authService = inject(AuthService);
   protected readonly _formBuilder = inject(FormBuilder);
   protected readonly submitSubject$ = new Subject<void>();
@@ -18,7 +20,10 @@ export class BaseAuthFormComponent
   ngOnInit(): void {
     this.submitSubject$
       .pipe(
-        tap(() => this.formGroup.markAsDirty()),
+        tap(() => {
+          this.formGroup.markAsDirty();
+          this.formGroup.markAllAsTouched();
+        }),
         switchMap(() =>
           this.formGroup.statusChanges.pipe(
             startWith(this.formGroup.status),

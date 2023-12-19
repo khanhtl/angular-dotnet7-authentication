@@ -5,41 +5,41 @@
         <div class="text-center mb-4">
           <h3 class="mb-3 font-weight-nomal">Create a new account</h3>
         </div>
-        <div *ngIf="formGroup.controls['firstName'] as control" class="form-floating mb-3">
-          <input [class.is-invalid]="control.touched && control.invalid" formControlName="firstName"
-            placeholder="First Name" name="firstName" type="text" class="form-control" />
-          <label for="firstName">First Name <span style="color: red">*</span></label>
+        <div *ngIf="formGroup.controls['FirstName'] as control" class="form-floating mb-3">
+          <input [class.is-invalid]="control.touched && control.invalid" formControlName="FirstName"
+            placeholder="First Name" name="FirstName" type="text" class="form-control" />
+          <label for="FirstName">First Name <span style="color: red">*</span></label>
           <error-message [control]="control"></error-message>
         </div>
-        <div *ngIf="formGroup.controls['lastName'] as control" class="form-floating mb-3">
-          <input [class.is-invalid]="control.touched && control.invalid" formControlName="lastName"
-            placeholder="Last Name" name="lastName" type="text" class="form-control" />
-          <label for="lastName">Last Name <span style="color: red">*</span></label>
+        <div *ngIf="formGroup.controls['LastName'] as control" class="form-floating mb-3">
+          <input [class.is-invalid]="control.touched && control.invalid" formControlName="LastName"
+            placeholder="Last Name" name="LastName" type="text" class="form-control" />
+          <label for="LastName">Last Name <span style="color: red">*</span></label>
           <error-message [control]="control"></error-message>
         </div>
-        <div *ngIf="formGroup.controls['email'] as control" class="form-floating mb-3">
-          <input [class.is-invalid]="control.touched && control.invalid" formControlName="email" placeholder="Email"
-            name="email" type="text" class="form-control" />
-          <label for="email">Email <span style="color: red">*</span></label>
+        <div *ngIf="formGroup.controls['Email'] as control" class="form-floating mb-3">
+          <input [class.is-invalid]="control.touched && control.invalid" formControlName="Email" placeholder="Email"
+            name="Email" type="text" class="form-control" />
+          <label for="Email">Email <span style="color: red">*</span></label>
           <error-message [control]="control"></error-message>
         </div>
-        <ng-container formGroupName="passwords" *ngIf="formGroup?.get('passwords') as passwords">
-          <div *ngIf="passwords.get('password') as control" class="form-floating mb-3 position-relative">
-            <input [class.is-invalid]="control.touched && control.invalid" formControlName="password"
-              placeholder="Password" name="password" [type]="isShowPassword ? 'text' : 'password'"
+        <ng-container formGroupName="Passwords" *ngIf="formGroup?.get('Passwords') as controls">
+          <div *ngIf="controls.get('Password') as control" class="form-floating mb-3 position-relative">
+            <input [class.is-invalid]="control.touched && control.invalid" formControlName="Password"
+              placeholder="Password" name="Password" [type]="isShowPassword ? 'text' : 'password'"
               class="form-control" />
-            <label for="password">Password <span style="color: red">*</span></label>
+            <label for="Password">Password <span style="color: red">*</span></label>
             <i *ngIf="!isShowPassword" (click)="isShowPassword = !isShowPassword"
               class="bi bi-eye-slash position-absolute icon-eye"></i>
             <i *ngIf="isShowPassword" (click)="isShowPassword = !isShowPassword"
               class="bi bi-eye position-absolute icon-eye"></i>
             <error-message [control]="control"></error-message>
           </div>
-          <div *ngIf="passwords.get('confirmPassword') as control" class="form-floating mb-3 position-relative">
-            <input [class.is-invalid]="control.touched && control.invalid" formControlName="confirmPassword"
-              placeholder="Confirm Password" name="confirmPassword" [type]="isShowConfirmPassword ? 'text' : 'password'"
+          <div *ngIf="controls.get('ConfirmPassword') as control" class="form-floating mb-3 position-relative">
+            <input [class.is-invalid]="control.touched && control.invalid" formControlName="ConfirmPassword"
+              placeholder="Confirm Password" name="ConfirmPassword" [type]="isShowConfirmPassword ? 'text' : 'password'"
               class="form-control" />
-            <label for="confirmPassword">Confirm Password <span style="color: red">*</span></label>
+            <label for="ConfirmPassword">Confirm Password <span style="color: red">*</span></label>
             <i *ngIf="!isShowConfirmPassword" (click)="isShowConfirmPassword = !isShowConfirmPassword"
               class="bi bi-eye-slash position-absolute icon-eye"></i>
             <i *ngIf="isShowConfirmPassword" (click)="isShowConfirmPassword = !isShowConfirmPassword"

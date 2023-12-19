@@ -1,4 +1,5 @@
 ﻿using Backend.Dtos;
+using Backend.Enum;
 using Backend.Interfaces;
 using Backend.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -26,43 +27,37 @@ namespace Backend.Controllers
             _userManager = userManager;
         }
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        public async Task<ServiceResponse> Login(LoginDto loginDto)
         {
-            var user = await _userManager.FindByNameAsync(loginDto.UserName);
+            var res = new ServiceResponse();
+            var user = await _userManager.FindByNameAsync(loginDto.Email);
             if (user == null)
             {
-
-                return Unauthorized(new Dictionary<string, object>
-                {
-                    { "errorMessage", "ERROR_MESSAGES.INVALID_USERNAME_PASSWORD" },
-                    { "errorCode", 999 },
-                    { "message", "Invalid username or password." }
-                });
+                res.Success = false;
+                res.ErrorCode = (int)EnumErrorCode.InvalidEmailOrPassword;
+                res.Errors = new List<Error> { new Error("Email", "Invalid email or password") };
+                return res;
             }
             if (!user.EmailConfirmed)
             {
-                return Unauthorized(new Dictionary<string, object>
-                {
-                    { "errorMessage", "ERROR_MESSAGES.EMAIL_NOT_CONFIRM" },
-                    { "errorCode", 998 },
-                    { "message", "Please confirm your email." }
-                });
+                res.Success = false;
+                res.ErrorCode = (int)EnumErrorCode.EmailNotConfirm;
+                res.Errors = new List<Error> { new Error("Email", "Email not confirm") };
+                return res;
             }
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.PassWord, false);
             if (!result.Succeeded)
             {
-                return Unauthorized(new Dictionary<string, object>
-                {
-                    { "errorMessage", "ERROR_MESSAGES.INVALID_USERNAME_PASSWORD" },
-                    { "errorCode", 999 },
-                    { "message", "Invalid username or password." }
-                });
+                res.Success = false;
+                res.ErrorCode = (int)EnumErrorCode.InvalidEmailOrPassword;
+                res.Errors = new List<Error> { new Error("Email", "Invalid email or password") };
+                return res;
             }
             return CreateApplicationUserDto(user);
         }
         [Authorize]
         [HttpGet("refresh_token")]
-        public async Task<ActionResult<UserDto>> RefreshToken()
+        public async Task<ServiceResponse> RefreshToken()
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.Email)?.Value);
 
@@ -71,17 +66,16 @@ namespace Backend.Controllers
 
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
+        public async Task<ServiceResponse> Register(RegisterDto registerDto)
         {
             var existEmail = await CheckEmailExist(registerDto.Email);
+            var res = new ServiceResponse();
             if (existEmail)
             {
-                return BadRequest(new Dictionary<string, object>
-                {
-                    { "errorMessage", "ERROR_MESSAGES.EMAIL_ALREADY_EXIST" },
-                    { "errorCode", 997 },
-                    { "message", "Email already exist. Please try with another email address." }
-                });
+                res.Success = false;
+                res.ErrorCode = (int)EnumErrorCode.EmailExist;
+                res.Errors = new List<Error> { new Error("Email", "Email already exist") };
+                return res;
             }
             var userToAdd = new User
             {
@@ -93,8 +87,13 @@ namespace Backend.Controllers
             };
 
             var resul = await _userManager.CreateAsync(userToAdd, registerDto.PassWord);
-            if (!resul.Succeeded) return BadRequest(resul.Errors);
-            return Ok();
+            if (!resul.Succeeded)
+            {
+                res.Success = false;
+                res.ErrorCode = (int)EnumErrorCode.Undefined; ;
+                return res;
+            };
+            return res;
         }
 
         private async Task<bool> CheckEmailExist(string email)
@@ -103,14 +102,16 @@ namespace Backend.Controllers
         }
 
         #region Private Helper Methods
-        private UserDto CreateApplicationUserDto(User user)
+        private ServiceResponse CreateApplicationUserDto(User user)
         {
-            return new UserDto
+            var res = new ServiceResponse();
+            res.Data = new UserDto
             {
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Token = _jwtService.CreateJwt(user),
             };
+            return res;
         }
         #endregion
     }

@@ -1,3 +1,4 @@
+import { ServiceResponse } from './../shared/models/ServiceResponse';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { inject } from '@angular/core';
@@ -12,9 +13,9 @@ export class AuthService {
   registerUrl=`${environment.baseUrl}/Auth/register`;
   loginUrl=`${environment.baseUrl}/Auth/login`;
   register(registerDto: RegisterDto) {
-    return this._http.post(this.registerUrl, registerDto);
+    return this._http.post<ServiceResponse>(this.registerUrl, registerDto);
   }
   login(loginDto: LoginDto) {
-    return this._http.post(this.loginUrl, loginDto);
+    return this._http.post<ServiceResponse>(this.loginUrl, loginDto);
   }
 }
