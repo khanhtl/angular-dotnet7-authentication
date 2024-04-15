@@ -35,7 +35,10 @@ namespace Backend.Controllers
             {
                 res.Success = false;
                 res.ErrorCode = (int)EnumErrorCode.InvalidEmailOrPassword;
-                res.Errors = new List<Error> { new Error("Email", "Invalid email or password") };
+                res.Errors = new List<Error> {
+                    new Error("Email", "Invalid email or password"),
+                    new Error("Password", "Invalid email or password"),
+                };
                 return res;
             }
             if (!user.EmailConfirmed)
@@ -50,7 +53,10 @@ namespace Backend.Controllers
             {
                 res.Success = false;
                 res.ErrorCode = (int)EnumErrorCode.InvalidEmailOrPassword;
-                res.Errors = new List<Error> { new Error("Email", "Invalid email or password") };
+                res.Errors = new List<Error> {
+                    new Error("Email", "Invalid email or password"),
+                    new Error("Password", "Invalid email or password"),
+                };
                 return res;
             }
             return CreateApplicationUserDto(user);
