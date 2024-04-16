@@ -10,5 +10,13 @@ namespace Backend.Models
         public int ErrorCode { get; set; } = 0;
         public List<Error> Errors { get; set; }
         public DateTimeOffset ServerTime { get; set; } = DateTimeOffset.Now;
+        public ServiceResponse()
+        {
+
+        }
+        public ServiceResponse(object data)
+        {
+            Data = data;
+        }
     }
 }

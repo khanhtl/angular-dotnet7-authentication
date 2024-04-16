@@ -2,12 +2,10 @@
 using Backend.Enum;
 using Backend.Interfaces;
 using Backend.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Backend.Controllers
@@ -61,14 +59,14 @@ namespace Backend.Controllers
             }
             return CreateApplicationUserDto(user);
         }
-        [Authorize]
-        [HttpGet("refresh_token")]
-        public async Task<ServiceResponse> RefreshToken()
-        {
-            var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.Email)?.Value);
+        //[Authorize]
+        //[HttpGet("refresh_token")]
+        //public async Task<ServiceResponse> RefreshToken()
+        //{
+        //    var user = await _userManager.FindByEmailAsync(User.FindFirst(ClaimTypes.Email)?.Value);
 
-            return CreateApplicationUserDto(user);
-        }
+        //    return CreateApplicationUserDto(user);
+        //}
 
 
         [HttpPost("register")]

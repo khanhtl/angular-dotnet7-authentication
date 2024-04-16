@@ -4,6 +4,8 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using System.Collections.Generic;
 
 string AllowAnyOriginPolicy = "AllowAnyOrigin";
 
@@ -15,7 +17,34 @@ builder.Services.UseLocalization();
 builder.Services.AddControllerWithFilter().UseCustomJsonResponse();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(option =>
+{
+    option.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+{
+    {
+        new OpenApiSecurityScheme
+        {
+            Name = "Bearer",
+            In = ParameterLocation.Header,
+            Reference = new OpenApiReference
+            {
+                Id = "Bearer",
+                Type = ReferenceType.SecurityScheme
+            }
+        },
+        new List<string>()
+    }
+});
+});
 builder.Services.AddDbContext(builder.Configuration);
 builder.Services.UseIdentity();
 builder.Services.AddAppAuthentication(builder.Configuration);
