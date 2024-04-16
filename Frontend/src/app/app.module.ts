@@ -8,10 +8,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
-import { PlayComponent } from './play/play.component';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { EmployeeComponent } from './employee/employee.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
+import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -23,7 +28,7 @@ export function createTranslateLoader(http: HttpClient) {
     NavbarComponent,
     FooterComponent,
     HomeComponent,
-    PlayComponent
+    EmployeeComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,15 +37,21 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     SharedModule,
     TranslateModule.forRoot({
-        defaultLanguage: 'en',
-          loader: {
-              provide: TranslateLoader,
-              useFactory: createTranslateLoader,
-              deps: [HttpClient]
-          }
-      }),
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

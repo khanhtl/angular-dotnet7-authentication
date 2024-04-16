@@ -9,6 +9,8 @@ import { GetFormControlErrorPipe } from './pipes/get-form-control-error.pipe';
 import { GetErrorMessagePipe } from './pipes/get-error-message.pipe';
 import { GetFormControlTouchPipe } from './pipes/get-form-control-touch.pipe';
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { NotificationComponent } from './components/modals/notification/notification.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,16 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
     GetErrorMessagePipe,
     GetFormControlTouchPipe,
     ErrorMessageComponent,
+    NotificationComponent,
   ],
 
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, TranslateModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    ModalModule.forRoot(),
+  ],
   exports: [
     RouterModule,
     ReactiveFormsModule,
@@ -28,7 +37,7 @@ import { ErrorMessageComponent } from './components/error-message/error-message.
     GetErrorMessagePipe,
     TranslateModule,
     GetFormControlTouchPipe,
-    ErrorMessageComponent
+    ErrorMessageComponent,
   ],
 })
 export class SharedModule {}

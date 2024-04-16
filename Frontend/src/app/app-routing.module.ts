@@ -1,35 +1,44 @@
-import { PlayComponent } from './play/play.component';
 import { NotFoundComponent } from './shared/components/errors/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { EmployeeComponent } from './employee/employee.component';
+import { AuthorizationGuard } from './shared/guards/authorization.guard';
 
-const routes: Routes=[
+const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
-    path: 'play',
-    component: PlayComponent
+    path: '',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthorizationGuard],
+    children: [
+      {
+        path: 'employee',
+        component: EmployeeComponent,
+      },
+    ],
   },
+
   {
     path: 'not-found',
-    component: NotFoundComponent
+    component: NotFoundComponent,
   },
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: '**',
     component: NotFoundComponent,
-    pathMatch: 'full'
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

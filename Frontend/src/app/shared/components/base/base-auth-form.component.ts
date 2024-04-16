@@ -1,6 +1,6 @@
 import { Directive, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from '@/app/auth/data-access/auth.service';
 import { BaseComponent } from './base.component';
 import { Subject, filter, startWith, switchMap, take, tap } from 'rxjs';
 import { Router } from '@angular/router';

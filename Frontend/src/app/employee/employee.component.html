@@ -1,0 +1,26 @@
+<ng-container *ngIf="employees$ | async as employees; else loading">
+
+  <ng-container *ngIf="employees.length; else noData">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>City</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of employees">
+          <td>{{employee.Name}}</td>
+          <td>{{employee.Email}}</td>
+          <td>{{employee.Phone}}</td>
+          <td>{{employee.City}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </ng-container>
+  <ng-template #noData>no data</ng-template>
+</ng-container>
+<ng-template #loading>loading...</ng-template>

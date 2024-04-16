@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { take } from 'rxjs';
 import { BaseAuthFormComponent } from 'src/app/shared/components/base/base-auth-form.component';
 import { CustomValidators } from 'src/app/shared/validators';
 
@@ -9,12 +10,15 @@ import { CustomValidators } from 'src/app/shared/validators';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent extends BaseAuthFormComponent implements OnInit {
+  isPending = false;
+  serverErrorMessages: string[] = [];
   override ngOnInit(): void {
+    this._authService.user$
+      .pipe(take(1))
+      .subscribe((user) => user && this._router.navigateByUrl('/'));
     super.ngOnInit();
     this.initializeForm();
   }
-  isPending = false;
-  serverErrorMessages: string[] = [];
   initializeForm() {
     this.formGroup = this._formBuilder.group({
       Email: [
@@ -39,10 +43,6 @@ export class LoginComponent extends BaseAuthFormComponent implements OnInit {
     this._authService.login(this.formGroup.value).subscribe(
       (res) => {
         this.isPending = false;
-        if (res.Success) {
-          this._router.navigateByUrl('/');
-          return;
-        }
         if (res.Errors.length) {
           res.Errors.forEach((error) => {
             const formControl = this.formGroup.get(error.Field);

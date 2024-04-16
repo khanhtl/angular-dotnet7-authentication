@@ -14,8 +14,8 @@
               [routerLinkActiveOptions]="{exact: true}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/play" routerLinkActive="active"
-              [routerLinkActiveOptions]="{exact: true}">Authenticated</a>
+            <a class="nav-link" routerLink="/employee" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact: true}">Employee</a>
           </li>
         </ul>
         <ng-container *ngIf="user$ | async as user; else notLogin">
